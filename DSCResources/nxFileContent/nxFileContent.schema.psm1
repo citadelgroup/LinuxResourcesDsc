@@ -1,37 +1,84 @@
-Configuration CISUbuntu16Policy110
-{
-    param
-    (
+Configuration nxFileContent {
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [String] $Name,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [String] $TestCommand,
+        
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [String] $Filename,
+        
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [String] $FileContent,
+        
         [Parameter()]
-        [String[]] $PoliciesToIgnore
+        [ValidateNotNullOrEmpty()]
+        [String] $AppendCommand,
+        
+        [Parameter()]
+        [ValidateNotNullOrEmpty()]
+        [String] $AppendRegex
     )
 
     # Import the module that defines custom resources
     Import-DSCResource -ModuleName nx -ModuleVersion "1.0"
-    nxFileLine "Test FileLine" {
-        FilePath = "/etc/testfileline"
-        ContainsLine = "Test"
-    }
 
-   nxScript "blah" {
-            GetScript = @'
+    if($AppendCommand -and $AppendRegex) {
+        nxScript $Name {
+            GetScript = @"
 #!/bin/bash
-if [ -f /etc/modprobe.d/CIS.conf ] && grep -Fxq 'install cramfs /bin/true' /etc/modprobe.d/CIS.conf ; then
-    echo 'install cramfs /bin/true'
+result=`$($TestCommand)
+if [[ "`$result" =~ ^pass$ ]] ; then
+    echo `$result
 fi
-'@
-            SetScript = @'
+"@
+            SetScript = @"
 #!/bin/bash
-echo 'install cramfs /bin/true' | tee -a /etc/modprobe.d/CIS.conf
-'@
-            TestScript = @'
+result=`$($AppendCommand)
+if [[ "`$result" =~ ^pass$ ]] ; then
+    echo '$FileContent' | tee -a $Filename
+else
+    sed -i 's/$AppendRegex/$FileContent/' $Filename
+fi
+"@
+            TestScript = @"
 #!/bin/bash
-if [ -f /etc/modprobe.d/CIS.conf ] && grep -Fxq 'install cramfs /bin/true' /etc/modprobe.d/CIS.conf ; then
+result=`$($TestCommand)
+if [[ "`$result" =~ ^pass$ ]] ; then
     exit 0
 else
     exit 1
 fi
-'@
+"@
+        }
+    }
+    else {    
+        nxScript $Name {
+            GetScript = @"
+#!/bin/bash
+result=`$($TestCommand)
+if [[ "`$result" =~ ^pass$ ]] ; then
+    echo `$result
+fi
+"@
+            SetScript = @"
+#!/bin/bash
+echo '$FileContent' | tee -a $Filename
+"@
+            TestScript = @"
+#!/bin/bash
+result=`$($TestCommand)
+if [[ "`$result" =~ ^pass$ ]] ; then
+    exit 0
+else
+    exit 1
+fi
+"@
         }
     }
 }
