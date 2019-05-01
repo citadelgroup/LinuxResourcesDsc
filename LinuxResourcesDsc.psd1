@@ -89,7 +89,7 @@
             Tags = 'CiX', 'DSC', 'DSCResourceKit', 'DSCResource'
     
             # A URL to the license for this module.
-            LicenseUri = 'https://notavailable'
+            LicenseUri = 'https://github.com/citadelgroup/LinuxResourcesDsc/blob/master/LICENSE'
     
             # A URL to the main website for this project.
             ProjectUri = 'https://github.com/citadelgroup/LinuxResourcesDsc'
