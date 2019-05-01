@@ -28,8 +28,6 @@ None
 
 #### Examples
 
-* [Create new Group Policy object](https://github.com/citadelgroup/GroupPolicyDsc/blob/master/Examples/Sample_CreateNewGroupPolicy.ps1)
-
 ## Versions
 
 ### 1.0.0
