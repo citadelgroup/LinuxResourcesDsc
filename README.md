@@ -20,7 +20,7 @@ Provides a mechanism to edit file content.
 * **[String] Filename** _(Write)_: The file to edit.
 * **[String] FileContent** _(Write)_: A string representing the content to write.
 * **[String] AppendCommand** _(Optional)_: The bash command to test whether the content should be edited in place or appended.
-* **[String] AppendRegex** _(Optional)_: A regex string to replace with FileContent.
+* **[String] EditRegex** _(Optional)_: A regex string to replace with FileContent.
 
 #### Read-Only Properties from Get-TargetResource
 

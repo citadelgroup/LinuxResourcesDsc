@@ -22,13 +22,13 @@ Configuration nxFileContent {
         
         [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [String] $AppendRegex
+        [String] $EditRegex
     )
 
     # Import the module that defines custom resources
     Import-DSCResource -ModuleName nx -ModuleVersion "1.0"
 
-    if($AppendCommand -and $AppendRegex) {
+    if($AppendCommand -and $EditRegex) {
         nxScript $Name {
             GetScript = @"
 #!/bin/bash
@@ -43,7 +43,7 @@ result=`$($AppendCommand)
 if [[ "`$result" =~ ^pass$ ]] ; then
     echo '$FileContent' | tee -a $Filename
 else
-    sed -i 's/$AppendRegex/$FileContent/' $Filename
+    sed -i 's/$EditRegex/$FileContent/' $Filename
 fi
 "@
             TestScript = @"
