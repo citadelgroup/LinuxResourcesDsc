@@ -21,6 +21,7 @@ Provides a mechanism to edit file content.
 * **[String] FileContent** _(Write)_: A string representing the content to write.
 * **[String] AppendCommand** _(Optional)_: The bash command to test whether the content should be edited in place or appended.
 * **[String] EditRegex** _(Optional)_: A regex string to replace with FileContent.
+* **[String] PostApplyCommand** _(Optional)_: A command to run after editing the file.
 
 #### Read-Only Properties from Get-TargetResource
 

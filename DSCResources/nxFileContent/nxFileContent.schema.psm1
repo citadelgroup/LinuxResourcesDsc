@@ -22,7 +22,11 @@ Configuration nxFileContent {
         
         [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [String] $EditRegex
+        [String] $EditRegex,
+        
+        [Parameter()]
+        [ValidateNotNullOrEmpty()]
+        [String] $PostApplyCommand
     )
 
     # Import the module that defines custom resources
@@ -45,6 +49,7 @@ if [[ "`$result" =~ ^pass$ ]] ; then
 else
     sed -i 's/$EditRegex/$FileContent/' $Filename
 fi
+$PostApplyCommand
 "@
             TestScript = @"
 #!/bin/bash
@@ -69,6 +74,7 @@ fi
             SetScript = @"
 #!/bin/bash
 echo '$FileContent' | tee -a $Filename
+$PostApplyCommand
 "@
             TestScript = @"
 #!/bin/bash
