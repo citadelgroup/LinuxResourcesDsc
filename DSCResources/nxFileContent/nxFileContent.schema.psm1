@@ -17,16 +17,13 @@ Configuration nxFileContent {
         [String] $FileContent,
         
         [Parameter()]
-        [ValidateNotNullOrEmpty()]
         [String] $AppendCommand,
         
         [Parameter()]
-        [ValidateNotNullOrEmpty()]
         [String] $EditRegex,
         
         [Parameter()]
-        [ValidateNotNullOrEmpty()]
-        [String] $PostApplyCommand
+        [String] $PostApplyCommand = ""
     )
 
     # Import the module that defines custom resources
@@ -62,7 +59,7 @@ fi
 "@
         }
     }
-    else {    
+    else {
         nxScript $Name {
             GetScript = @"
 #!/bin/bash
