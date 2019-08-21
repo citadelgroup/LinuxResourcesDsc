@@ -3,7 +3,7 @@
     # RootModule = ''
     
     # Version number of this module.
-    moduleVersion = '1.0.1'
+    moduleVersion = '1.1.1'
     
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -72,7 +72,8 @@
     AliasesToExport = @()
     
     # DSC resources to export from this module
-    DscResourcesToExport = @('nxFileContent')
+    DscResourcesToExport = @('nxFileContent',
+                             'nxConfigSetting')
     
     # List of all modules packaged with this module
     # ModuleList = @()
