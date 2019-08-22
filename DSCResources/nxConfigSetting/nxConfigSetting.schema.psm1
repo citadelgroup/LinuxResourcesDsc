@@ -30,7 +30,7 @@ fi
 "@
         SetScript = @"
 #!/bin/bash
-$($FixCommands -join '`n')
+$($FixCommands -join "`n")
 "@
         TestScript = @"
 #!/bin/bash
